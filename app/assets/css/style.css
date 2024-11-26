@@ -1,0 +1,15 @@
+@font-face {
+    font-family: "Vela Sans";
+    src: url("https://db.onlinewebfonts.com/t/1d81cdaee5e55acbcf50ccbfc8b94122.eot");
+    src: url("https://db.onlinewebfonts.com/t/1d81cdaee5e55acbcf50ccbfc8b94122.eot?#iefix")format("embedded-opentype"),
+        url("https://db.onlinewebfonts.com/t/1d81cdaee5e55acbcf50ccbfc8b94122.woff2")format("woff2"),
+        url("https://db.onlinewebfonts.com/t/1d81cdaee5e55acbcf50ccbfc8b94122.woff")format("woff"),
+        url("https://db.onlinewebfonts.com/t/1d81cdaee5e55acbcf50ccbfc8b94122.ttf")format("truetype"),
+        url("https://db.onlinewebfonts.com/t/1d81cdaee5e55acbcf50ccbfc8b94122.svg#Vela Sans")format("svg");
+}
+
+body {
+    font-family: 'Vela Sans', sans-serif;
+    height: 100vh;
+    background-color: white;
+}
