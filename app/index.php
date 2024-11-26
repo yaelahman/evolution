@@ -165,9 +165,10 @@ include './layouts/header.php';
                 .then(response => response.json())
                 .then(data => {
                     const currentStage = "<?= $step ?>"
-                    alert(data.message); // Send alert with the response from the server
                     if (data.status && parseInt(currentStage) < 4) {
                         window.location.href = data.nextStage
+                    } else {
+                        alert(data.message); // Send alert with the response from the server
                     }
                 })
                 .catch(error => {

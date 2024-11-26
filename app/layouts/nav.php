@@ -28,7 +28,7 @@ if ($step > 2) {
                     <span class="h-2 w-2 bg-primary rounded-full mr-2"></span> +1 346 410 1320
                 </li>
             </ul>
-            <button>
+            <button id="openMobileNav">
                 <svg width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M4.5 8H25.5" stroke="url(#paint0_linear_16_285)" stroke-width="1.5"
                         stroke-linejoin="round" />
@@ -64,7 +64,7 @@ if ($step > 2) {
         <div class="w-[<?= $percent ?>%] h-[2px] md:hidden block bg-progress absolute top-4"></div>
         <div class="flex bg-white rounded-xl gap-3 z-10">
             <div
-                class="rounded-full <?= $step >= 1 ? 'bg-primaryGradient text-white' : 'border border-secondary text-secondary' ?> h-8 w-8 <?= $step > 1 ? 'ps-[8px] pt-[5px]' : 'ps-[6px] pt-[5px]' ?> lg:text-sm text-sm my-auto">
+                class="rounded-full <?= $step >= 1 ? 'bg-primaryGradient text-white' : 'border border-secondary text-secondary' ?> h-8 w-8 <?= $step > 1 ? 'ps-[10px] pt-[5px]' : 'ps-[9px] pt-[5px]' ?> lg:text-sm text-sm my-auto">
                 <p><?= $step > 1 ? '<i class="fas fa-check"></i>' : '01' ?></p>
             </div>
             <?php if ($step == 1): ?>
@@ -78,7 +78,7 @@ if ($step > 2) {
         </div>
         <div class="flex bg-white rounded-xl gap-3 z-10">
             <div
-                class="rounded-full <?= $step >= 2 ? 'bg-primaryGradient text-white' : 'border border-secondary text-secondary' ?> h-8 w-8 <?= $step > 2 ? 'ps-[8px] pt-[5px]' : 'ps-[6px] pt-[5px]' ?> lg:text-sm text-sm my-auto">
+                class="rounded-full <?= $step >= 2 ? 'bg-primaryGradient text-white' : 'border border-secondary text-secondary' ?> h-8 w-8 <?= $step > 2 ? 'ps-[10px] pt-[5px]' : 'ps-[8px] pt-[5px]' ?> lg:text-sm text-sm my-auto">
                 <p><?= $step > 2 ? '<i class="fas fa-check"></i>' : '02' ?></p>
             </div>
             <?php if ($step == 2): ?>
@@ -92,7 +92,7 @@ if ($step > 2) {
         </div>
         <div class="flex bg-white rounded-xl gap-3 z-10">
             <div
-                class="rounded-full <?= $step >= 3 ? 'bg-primaryGradient text-white' : 'border border-secondary text-secondary' ?> h-8 w-8 <?= $step > 3 ? 'ps-[8px] pt-[5px]' : 'ps-[6px] pt-[5px]' ?> lg:text-sm text-sm my-auto">
+                class="rounded-full <?= $step >= 3 ? 'bg-primaryGradient text-white' : 'border border-secondary text-secondary' ?> h-8 w-8 <?= $step > 3 ? 'ps-[10px] pt-[5px]' : 'ps-[8px] pt-[5px]' ?> lg:text-sm text-sm my-auto">
                 <p><?= $step > 3 ? '<i class="fas fa-check"></i>' : '03' ?></p>
             </div>
             <?php if ($step == 3): ?>
@@ -106,7 +106,7 @@ if ($step > 2) {
         </div>
         <div class="flex bg-white rounded-xl gap-3 z-10">
             <div
-                class="rounded-full <?= $step >= 4 ? 'bg-primaryGradient text-white' : 'border border-secondary text-secondary' ?> h-8 w-8 <?= $step > 4 ? 'ps-[8px] pt-[5px]' : 'ps-[6px] pt-[5px]' ?> lg:text-sm text-sm my-auto">
+                class="rounded-full <?= $step >= 4 ? 'bg-primaryGradient text-white' : 'border border-secondary text-secondary' ?> h-8 w-8 <?= $step > 4 ? 'ps-[10px] pt-[5px]' : 'ps-[8px] pt-[5px]' ?> lg:text-sm text-sm my-auto">
                 <p><?= $step > 4 ? '<i class="fas fa-check"></i>' : '04' ?></p>
             </div>
             <?php if ($step == 4): ?>
@@ -120,3 +120,48 @@ if ($step > 2) {
         </div>
     </div>
 </nav>
+
+<!-- Start Generation Here -->
+<nav class="fixed top-0 left-0 w-full bg-white h-full z-30 transition-transform" id="mobileNav">
+    <div class="flex justify-between items-center p-4 border-b">
+        <h2 class="text-lg font-semibold text-header">Menu</h2>
+        <button id="closeMobileNav" class="text-gray-600">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    <ul class="flex flex-col p-4">
+        <li class="py-2">
+            <a href="?step=1" class="text-header">Step 1: Introduction</a>
+        </li>
+        <li class="py-2">
+            <a href="?step=2" class="text-header">Step 2: Floor Plans</a>
+        </li>
+        <li class="py-2">
+            <a href="?step=3" class="text-header">Step 3: Inspiration Photos</a>
+        </li>
+        <li class="py-2">
+            <a href="?step=4" class="text-header">Step 4: Final</a>
+        </li>
+    </ul>
+</nav>
+<div class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden" id="mobileNavOverlay"></div>
+
+<script>
+    document.getElementById('openMobileNav').addEventListener('click', function() {
+        document.getElementById('mobileNav').style.transform = 'translateX(0)';
+        document.getElementById('mobileNavOverlay').classList.remove('hidden');
+    });
+
+    document.getElementById('closeMobileNav').addEventListener('click', function() {
+        document.getElementById('mobileNav').style.transform = 'translateX(-100%)';
+        document.getElementById('mobileNavOverlay').classList.add('hidden');
+    });
+
+    document.getElementById('mobileNavOverlay').addEventListener('click', function() {
+        document.getElementById('mobileNav').style.transform = 'translateX(-100%)';
+        document.getElementById('mobileNavOverlay').classList.add('hidden');
+    });
+    document.getElementById('mobileNav').style.transform = 'translateX(-100%)';
+    document.getElementById('mobileNavOverlay').classList.add('hidden');
+</script>
+<!-- End Generation Here -->

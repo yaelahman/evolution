@@ -3,6 +3,14 @@
 session_start(); // Start the session if not already started
 include './config/base.php';
 include './config/db.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require './vendor/PHPMailer/src/Exception.php';
+require './vendor/PHPMailer/src/PHPMailer.php';
+require './vendor/PHPMailer/src/SMTP.php';
+
 // Assuming a connection to the database has already been established
 
 function uploadFiles($pdo, $uploadedFiles)
@@ -30,7 +38,6 @@ function uploadFiles($pdo, $uploadedFiles)
         // If existing data is found, update it instead of inserting a new record
         if (!empty($existingData)) {
             $uploadId = $existingData[0]['id']; // Use the existing upload ID
-
 
             $ipAddress = $_POST['ip_address'] ?? $existingData[0]['ip_address'] ?? $ipAddress;
             $stage = $_POST['stage'] ?? $existingData[0]['stage'] ?? $stage;
@@ -91,7 +98,56 @@ function uploadFiles($pdo, $uploadedFiles)
             }
         }
 
-        return ["status" => true, "message" => "Files uploaded successfully!", "nextStage" => BASE_URL . "app/index.php?step=" . $stage + 1];
+        // Forward data to email when stage is 4
+        if ($stage == 4) {
+            $to = "yaelahman0810@gmail.com"; // Recipient's email
+            $subject = "Project Submission - Stage 4";
+            $message = "Name: $name\nPhone: $phone\nEmail: $email\nScope of Work: $scopeOfWork\nFloor Plan: $floorPlan\nTrust: $trust\n\nUploaded Files:\n";
+
+            // Fetch all uploaded files for the email
+            $fileStmt = $pdo->prepare("SELECT file FROM upload_files WHERE upload_id = ?");
+            $fileStmt->execute([$uploadId]);
+            $files = $fileStmt->fetchAll(PDO::FETCH_COLUMN);
+
+            if (!empty($files)) {
+                foreach ($files as $file) {
+                    $message .= "- $file\n"; // Append each file to the message
+                }
+            } else {
+                $message .= "No files uploaded.\n";
+            }
+
+            // Set your email configuration
+            $fromEmail = "no-reply@yourdomain.com"; // Change to your domain
+            $headers = "From: $fromEmail"; // Use the configured email
+
+            // SMTP configuration
+            $smtpHost = 'mail.synnmlbb.com'; // Your SMTP server
+            $smtpPort = 465; // Your SMTP port (usually 587 for TLS or 465 for SSL)
+            $smtpUser = 'no-reply@synnmlbb.com'; // Your SMTP username
+            $smtpPass = 'GHe19giTvMGMi'; // Your SMTP password
+
+
+            $mail = new PHPMailer();
+            $mail->isSMTP();
+            $mail->Host = $smtpHost;
+            $mail->SMTPAuth = true;
+            $mail->Username = $smtpUser;
+            $mail->Password = $smtpPass;
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Use TLS encryption
+            $mail->Port = $smtpPort;
+
+            $mail->setFrom($fromEmail);
+            $mail->addAddress($to);
+            $mail->Subject = $subject;
+            $mail->Body = $message;
+
+            if (!$mail->send()) {
+                error_log("Failed to send email to $to. Error: " . $mail->ErrorInfo);
+            }
+        }
+
+        return ["status" => true, "message" => "Files uploaded successfully!", "nextStage" => BASE_URL . "app/index.php?step=" . ($stage + 1)];
     } catch (\Exception $e) {
         return ["status" => false, "message" => $e->getMessage()];
     }
