@@ -120,7 +120,6 @@ function uploadFiles($pdo, $uploadedFiles)
                 <tr><th>Scope of Work</th><td>$scopeOfWork</td></tr>
                 <tr><th>No Floor Plans</th><td>" . ($floorPlan == 1 ? 'Yes' : 'No') . "</td></tr>
                 <tr><th>Trust Choice</th><td>" . ($trust == 1 ? 'Yes' : 'No') . "</td></tr>
-                <tr><th>Image</th></tr>
             </table>
         </body>
         </html>";
