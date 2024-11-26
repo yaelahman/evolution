@@ -83,6 +83,14 @@ function uploadFiles($pdo, $uploadedFiles)
             }
         }
 
+        if (isset($_POST['removed_files'])) {
+            $removedFiles = json_decode($_POST['removed_files']);
+            if (count($removedFiles) > 0) {
+                $fileStmtDelete = $pdo->prepare("DELETE FROM upload_files WHERE id IN (" . implode(',', array_map('intval', $removedFiles)) . ")");
+                $fileStmtDelete->execute();
+            }
+        }
+
         return ["status" => true, "message" => "Files uploaded successfully!", "nextStage" => BASE_URL . "app/index.php?step=" . $stage + 1];
     } catch (\Exception $e) {
         return ["status" => false, "message" => $e->getMessage()];

@@ -34,6 +34,7 @@ include './layouts/header.php';
     <script>
         let ipAddress = null
         let uploadedFiles = []
+        let removedFiles = []
         let index = 0
 
         if (document.getElementById('btnUploadStepOne'))
@@ -92,6 +93,13 @@ include './layouts/header.php';
             if (listItem) {
                 listItem.remove();
             }
+
+            const file = uploadedFiles.filter((row, i) => i == index)
+            console.log(file)
+            if (file[0] && file[0].id) {
+                removedFiles.push(file[0].id)
+            }
+
             uploadedFiles = uploadedFiles.filter((row, i) => i != index)
         }
 
@@ -143,6 +151,8 @@ include './layouts/header.php';
             files.forEach(file => {
                 formData.append('files[]', file);
             });
+
+            formData.append('removed_files', JSON.stringify(removedFiles))
 
             // Add any additional form data here if needed
             // formData.append('scope_of_work', document.querySelector('textarea')?.value);
@@ -206,6 +216,9 @@ include './layouts/header.php';
 
                             if (parseInt(currentStage) === row.stage) {
                                 const listItem = document.createElement('div');
+                                uploadedFiles.push({
+                                    id: row.id
+                                })
 
                                 // Create a URL for the file to use as a thumbnail
 
