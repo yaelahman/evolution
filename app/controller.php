@@ -182,7 +182,7 @@ function uploadFiles($pdo, $uploadedFiles)
         }
        }
 
-        return ["status" => true, "message" => "Files uploaded successfully!", "nextStage" => BASE_URL . "app/index.php?step=" . ($stage + 1)];
+        return ["status" => true, "message" => "Thanks for the application! We will contact you and discuss the details.", "nextStage" => BASE_URL . "app/index.php?step=" . ($stage + 1)];
     } catch (\Exception $e) {
         return ["status" => false, "message" => $e->getMessage()];
     }

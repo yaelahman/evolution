@@ -176,7 +176,11 @@ include './layouts/header.php';
                     if (data.status && parseInt(currentStage) < 4) {
                         window.location.href = data.nextStage
                     } else {
-                        alert(data.message); // Send alert with the response from the server
+                        Swal.fire({
+                            icon: data.status ? 'success' : 'error',
+                            title: data.status ? 'Success' : 'Error',
+                            text: data.message,
+                        });
                     }
                 })
                 .catch(error => {
