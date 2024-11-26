@@ -3,9 +3,9 @@
 // This code establishes a connection to a MySQL database using PDO
 try {
     $host = 'localhost'; // Database host
-    $db = 'evolution'; // Database name
-    $user = 'root'; // Database username
-    $pass = ''; // Database password
+    $db = 'synn_app'; // Database name
+    $user = 'synn_app'; // Database username
+    $pass = 'Manzcode111'; // Database password
     $charset = 'utf8mb4'; // Character set
 
     $dsn = "mysql:host=$host;dbname=$db;charset=$charset";

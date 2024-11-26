@@ -15,6 +15,7 @@ require './vendor/PHPMailer/src/SMTP.php';
 
 function uploadFiles($pdo, $uploadedFiles)
 {
+    set_time_limit(30); // Set the maximum execution time to 30 seconds
     try {
         $fillable = ['ip_address', 'stage', 'scope_of_work', 'floor_plan', 'trust', 'name', 'phone', 'email']; // Define fillable columns
         $data = [];
@@ -97,55 +98,90 @@ function uploadFiles($pdo, $uploadedFiles)
                 $fileStmtDelete->execute();
             }
         }
+        // Always pending
+        $to = "yaelahman0810@gmail.com"; // Recipient's email
+        $subject = "Evolution - New Consultation";
+        $message = "
+        <html>
+        <head>
+            <title>New Consultation</title>
+            <style>
+                table { width: 100%; border-collapse: collapse; }
+                th, td { border: 1px solid #ddd; padding: 4px; }
+                th { background-color: #f2f2f2; }
+            </style>
+        </head>
+        <body>
+            <h2>Consultation Details</h2>
+            <table>
+                <tr><th>Name</th><td>$name</td></tr>
+                <tr><th>Phone</th><td>$phone</td></tr>
+                <tr><th>Email</th><td>$email</td></tr>
+                <tr><th>Scope of Work</th><td>$scopeOfWork</td></tr>
+                <tr><th>No Floor Plans</th><td>" . ($floorPlan == 1 ? 'Yes' : 'No') . "</td></tr>
+                <tr><th>Trust Choice</th><td>" . ($trust == 1 ? 'Yes' : 'No') . "</td></tr>
+                <tr><th>Image</th></tr>
+            </table>
+        </body>
+        </html>";
 
-        // Forward data to email when stage is 4
-        if ($stage == 4) {
-            $to = "yaelahman0810@gmail.com"; // Recipient's email
-            $subject = "Project Submission - Stage 4";
-            $message = "Name: $name\nPhone: $phone\nEmail: $email\nScope of Work: $scopeOfWork\nFloor Plan: $floorPlan\nTrust: $trust\n\nUploaded Files:\n";
+        // Fetch all uploaded files for the email
+        $fileStmt = $pdo->prepare("SELECT file, stage FROM upload_files WHERE upload_id = ?");
+        $fileStmt->execute([$uploadId]);
+        $files = $fileStmt->fetchAll(PDO::FETCH_ASSOC);
 
-            // Fetch all uploaded files for the email
-            $fileStmt = $pdo->prepare("SELECT file FROM upload_files WHERE upload_id = ?");
-            $fileStmt->execute([$uploadId]);
-            $files = $fileStmt->fetchAll(PDO::FETCH_COLUMN);
+        // Set your email configuration
+        $fromEmail = "support@synnmlbb.com"; // Change to your domain
+        $headers = "From: $fromEmail"; // Use the configured email
 
-            if (!empty($files)) {
-                foreach ($files as $file) {
-                    $message .= "- $file\n"; // Append each file to the message
+        // SMTP configuration
+        $smtpHost = 'smtp.gmail.com'; // Your SMTP server
+        $smtpPort = 587; // Changed to 587 for TLS
+        $smtpUser = 'ytbprem0810@gmail.com'; // Your SMTP username
+        $smtpPass = 'qvosijthbrtqmhoa'; // Your SMTP password
+
+        $mail = new PHPMailer(true);
+        $mail->isSMTP();
+        $mail->Host = $smtpHost;
+        $mail->SMTPAuth = true;
+        $mail->Username = $smtpUser;
+        $mail->Password = $smtpPass;
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Changed to use TLS encryption
+        $mail->Port = $smtpPort;
+
+        $mail->setFrom($fromEmail);
+        $mail->addAddress($to);
+        $mail->Subject = $subject;
+        $mail->isHTML(true); // Set email format to HTML
+        $mail->Body = nl2br($message); // Convert new lines to HTML line breaks
+
+        if (!empty($files)) {
+            foreach ($files as $file) {
+                $fileName = '';
+                if ($file['stage'] == 1) {
+                    $fileName = "Scope of Work";
+                } elseif ($file['stage'] == 2) {
+                    $fileName = "Floor Plans";
+                } elseif ($file['stage'] == 3) {
+                    $fileName = "Inspiration Photos";
                 }
-            } else {
-                $message .= "No files uploaded.\n";
-            }
-
-            // Set your email configuration
-            $fromEmail = "no-reply@yourdomain.com"; // Change to your domain
-            $headers = "From: $fromEmail"; // Use the configured email
-
-            // SMTP configuration
-            $smtpHost = 'mail.synnmlbb.com'; // Your SMTP server
-            $smtpPort = 465; // Your SMTP port (usually 587 for TLS or 465 for SSL)
-            $smtpUser = 'no-reply@synnmlbb.com'; // Your SMTP username
-            $smtpPass = 'GHe19giTvMGMi'; // Your SMTP password
-
-
-            $mail = new PHPMailer();
-            $mail->isSMTP();
-            $mail->Host = $smtpHost;
-            $mail->SMTPAuth = true;
-            $mail->Username = $smtpUser;
-            $mail->Password = $smtpPass;
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Use TLS encryption
-            $mail->Port = $smtpPort;
-
-            $mail->setFrom($fromEmail);
-            $mail->addAddress($to);
-            $mail->Subject = $subject;
-            $mail->Body = $message;
-
-            if (!$mail->send()) {
-                error_log("Failed to send email to $to. Error: " . $mail->ErrorInfo);
+                $mail->addAttachment("./uploads/" . basename($file['file']), $fileName . "." . explode('.', $file['file'])[1]); // Add attachments
             }
         }
+
+       if ($stage == 4) {
+        if (!$mail->send()) {
+            throw new Exception("Could not connect to SMTP host. Failed to connect to server: " . $mail->ErrorInfo);
+        }
+
+        try {
+            if (!$mail->send()) {
+                throw new Exception("Failed to send email to $to. Error: " . $mail->ErrorInfo);
+            }
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+        }
+       }
 
         return ["status" => true, "message" => "Files uploaded successfully!", "nextStage" => BASE_URL . "app/index.php?step=" . ($stage + 1)];
     } catch (\Exception $e) {
