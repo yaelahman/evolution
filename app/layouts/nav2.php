@@ -1,7 +1,7 @@
 <?php
 $step = $_GET['step'] ?? 1;
 ?>
-<div class="flex flex-col justify-between h-full 2xl:ps-12">
+<div class="flex flex-col justify-between min-h-[600px] h-full 2xl:ps-12">
     <div class="flex flex-col gap-1">
         <div class="mb-8">
             <img src="./assets/images/logo.png" class="h-8" alt="">
@@ -32,7 +32,7 @@ $step = $_GET['step'] ?? 1;
         </a>
         <a href="?step=3" class="flex w-full rounded-xl px-4 py-3 gap-3 hover:bg-primary hover:bg-opacity-10 cursor-pointer <?= $step == 3 ? 'bg-white' : '' ?>">
             <div
-                class="rounded-full <?= $step >= 3 ? 'bg-primaryGradient text-white' : 'border border-secondary text-secondary' ?> h-8 w-8 <?= $step > 3 ? 'ps-[10px] pt-[6px]' : 'ps-[8px] pt-[6px]' ?> lg:text-sm text-sm my-auto">
+                class="rounded-full <?= $step >= 3 ? 'bg-primaryGradient text-white' : 'border border-secondary text-secondary' ?> h-8 w-8 <?= $step > 3 ? 'ps-[10px] pt-[6px]' : 'ps-[6px] pt-[6px]' ?> lg:text-sm text-sm my-auto">
                 <p><?= $step > 3 ? '<i class="fas fa-check"></i>' : '03' ?></p>
             </div>
             <div class="text-start">
@@ -44,7 +44,7 @@ $step = $_GET['step'] ?? 1;
         </a>
         <a href="?step=4" class="flex w-full rounded-xl px-4 py-3 gap-3 hover:bg-primary hover:bg-opacity-10 cursor-pointer <?= $step == 4 ? 'bg-white' : '' ?>">
             <div
-                class="rounded-full <?= $step >= 4 ? 'bg-primaryGradient text-white' : 'border border-secondary text-secondary' ?> h-8 w-8 <?= $step > 4 ? 'ps-[10px] pt-[6px]' : 'ps-[8px] pt-[6px]' ?> lg:text-sm text-sm my-auto">
+                class="rounded-full <?= $step >= 4 ? 'bg-primaryGradient text-white' : 'border border-secondary text-secondary' ?> h-8 w-8 <?= $step > 4 ? 'ps-[10px] pt-[6px]' : 'ps-[6px] pt-[6px]' ?> lg:text-sm text-sm my-auto">
                 <p><?= $step > 4 ? '<i class="fas fa-check"></i>' : '04' ?></p>
             </div>
             <div class="text-start">

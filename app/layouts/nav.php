@@ -62,7 +62,7 @@ if ($step > 2) {
     <div class="mt-3 flex justify-between relative">
         <div class="w-full h-[2px] bg-gray absolute md:top-6 top-4"></div>
         <div class="w-[<?= $percent ?>%] h-[2px] md:hidden block bg-progress absolute top-4"></div>
-        <div class="flex bg-white rounded-xl gap-3 z-10">
+        <a href="?step=1" class="flex bg-white rounded-xl gap-3 z-10">
             <div
                 class="rounded-full <?= $step >= 1 ? 'bg-primaryGradient text-white' : 'border border-secondary text-secondary' ?> h-8 w-8 <?= $step > 1 ? 'ps-[10px] pt-[5px]' : 'ps-[9px] pt-[5px]' ?> lg:text-sm text-sm my-auto">
                 <p><?= $step > 1 ? '<i class="fas fa-check"></i>' : '01' ?></p>
@@ -75,8 +75,8 @@ if ($step > 2) {
                     <h6 class="text-header font-medium">Scope of Work & Photos</h6>
                 </div>
             <?php endif; ?>
-        </div>
-        <div class="flex bg-white rounded-xl gap-3 z-10">
+        </a>
+        <a href="?step=2" class="flex bg-white rounded-xl gap-3 z-10">
             <div
                 class="rounded-full <?= $step >= 2 ? 'bg-primaryGradient text-white' : 'border border-secondary text-secondary' ?> h-8 w-8 <?= $step > 2 ? 'ps-[10px] pt-[5px]' : 'ps-[8px] pt-[5px]' ?> lg:text-sm text-sm my-auto">
                 <p><?= $step > 2 ? '<i class="fas fa-check"></i>' : '02' ?></p>
@@ -89,8 +89,8 @@ if ($step > 2) {
                     <h6 class="text-header font-medium">Floor Plans</h6>
                 </div>
             <?php endif; ?>
-        </div>
-        <div class="flex bg-white rounded-xl gap-3 z-10">
+        </a>
+        <a href="?step=3" class="flex bg-white rounded-xl gap-3 z-10">
             <div
                 class="rounded-full <?= $step >= 3 ? 'bg-primaryGradient text-white' : 'border border-secondary text-secondary' ?> h-8 w-8 <?= $step > 3 ? 'ps-[10px] pt-[5px]' : 'ps-[8px] pt-[5px]' ?> lg:text-sm text-sm my-auto">
                 <p><?= $step > 3 ? '<i class="fas fa-check"></i>' : '03' ?></p>
@@ -103,8 +103,8 @@ if ($step > 2) {
                     <h6 class="text-header font-medium">Inspiration Photos</h6>
                 </div>
             <?php endif; ?>
-        </div>
-        <div class="flex bg-white rounded-xl gap-3 z-10">
+        </a>
+        <a href="?step=4" class="flex bg-white rounded-xl gap-3 z-10">
             <div
                 class="rounded-full <?= $step >= 4 ? 'bg-primaryGradient text-white' : 'border border-secondary text-secondary' ?> h-8 w-8 <?= $step > 4 ? 'ps-[10px] pt-[5px]' : 'ps-[8px] pt-[5px]' ?> lg:text-sm text-sm my-auto">
                 <p><?= $step > 4 ? '<i class="fas fa-check"></i>' : '04' ?></p>
@@ -117,30 +117,36 @@ if ($step > 2) {
                     <h6 class="text-header font-medium">Final</h6>
                 </div>
             <?php endif; ?>
-        </div>
+        </a>
     </div>
 </nav>
 
 <!-- Start Generation Here -->
-<nav class="fixed top-0 left-0 w-full bg-white h-full z-30 transition-transform" id="mobileNav">
+<nav class="fixed top-0 left-0 w-full bg-white z-30 transition-transform" id="mobileNav">
     <div class="flex justify-between items-center p-4 border-b">
-        <h2 class="text-lg font-semibold text-header">Menu</h2>
+        <img src="./assets/images/logo.png" width="120px" alt="">
         <button id="closeMobileNav" class="text-gray-600">
             <i class="fas fa-times"></i>
         </button>
     </div>
     <ul class="flex flex-col p-4">
         <li class="py-2">
-            <a href="?step=1" class="text-header">Step 1: Introduction</a>
+            <a href="" class="text-header">Service</a>
         </li>
         <li class="py-2">
-            <a href="?step=2" class="text-header">Step 2: Floor Plans</a>
+            <a href="" class="text-header">How it works</a>
         </li>
         <li class="py-2">
-            <a href="?step=3" class="text-header">Step 3: Inspiration Photos</a>
+            <a href="" class="text-header">Project</a>
         </li>
         <li class="py-2">
-            <a href="?step=4" class="text-header">Step 4: Final</a>
+            <a href="" class="text-header">Company</a>
+        </li>
+        <li class="py-2">
+            <a href="" class="text-header">Contacts</a>
+        </li>
+        <li class="py-2">
+            <a href="" class="text-header">EG Express</a>
         </li>
     </ul>
 </nav>
@@ -148,20 +154,20 @@ if ($step > 2) {
 
 <script>
     document.getElementById('openMobileNav').addEventListener('click', function() {
-        document.getElementById('mobileNav').style.transform = 'translateX(0)';
+        document.getElementById('mobileNav').style.transform = 'translateY(0)';
         document.getElementById('mobileNavOverlay').classList.remove('hidden');
     });
 
     document.getElementById('closeMobileNav').addEventListener('click', function() {
-        document.getElementById('mobileNav').style.transform = 'translateX(-100%)';
+        document.getElementById('mobileNav').style.transform = 'translateY(-100%)';
         document.getElementById('mobileNavOverlay').classList.add('hidden');
     });
 
     document.getElementById('mobileNavOverlay').addEventListener('click', function() {
-        document.getElementById('mobileNav').style.transform = 'translateX(-100%)';
+        document.getElementById('mobileNav').style.transform = 'translateY(-100%)';
         document.getElementById('mobileNavOverlay').classList.add('hidden');
     });
-    document.getElementById('mobileNav').style.transform = 'translateX(-100%)';
+    document.getElementById('mobileNav').style.transform = 'translateY(-100%)';
     document.getElementById('mobileNavOverlay').classList.add('hidden');
 </script>
 <!-- End Generation Here -->

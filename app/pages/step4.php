@@ -24,8 +24,7 @@
                     <input type="email" name="email" id="email" required class="bg-white border border-[#DDDDDD] rounded-full focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent w-full 2xl:p-4 2xl:px-6 p-2 px-4" placeholder="E-mail*" />
                 </div>
                 <div class="flex md:flex-row flex-col lg:flex-col gap-2">
-                    <button
-                        class="transition-all duration-150 bg-primaryGradient rounded-full px-6 py-3 text-white">
+                    <button id="sendButton" class="transition-all duration-150 bg-primaryGradient rounded-full px-6 py-3 text-white disabled:opacity-50 disabled:cursor-not-allowed">
                         Send
                     </button>
                     <p class="text-muted">

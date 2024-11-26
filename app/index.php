@@ -113,6 +113,17 @@ include './layouts/header.php';
         document.querySelector('form').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent the default form submission
 
+            // Disable all buttons
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(button => button.disabled = true);
+
+            const sendButton = document.querySelector('#sendButton');
+
+            if (sendButton) {
+                sendButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            }
+            
+
             const formData = new FormData();
             const files = Object?.values(uploadedFiles);
             const stage = document.querySelector('input[name="stage"]')?.value;
@@ -154,9 +165,6 @@ include './layouts/header.php';
 
             formData.append('removed_files', JSON.stringify(removedFiles))
 
-            // Add any additional form data here if needed
-            // formData.append('scope_of_work', document.querySelector('textarea')?.value);
-
             // Send the form data using fetch
             fetch("<?= BASE_URL ?>app/controller.php", {
                     method: 'POST',
@@ -173,6 +181,15 @@ include './layouts/header.php';
                 })
                 .catch(error => {
                     console.error('Error:', error); // Handle any errors
+                })
+                .finally(() => {
+                    // Re-enable all buttons after the fetch is complete
+                    buttons.forEach(button => button.disabled = false);
+
+                    if (sendButton) {
+                        sendButton.disabled = true
+                        sendButton.innerHTML = '<i class="fas fa-check"></i> Sent Successfully';
+                    }
                 });
         });
 
