@@ -64,8 +64,8 @@ if ($step > 2) {
         <div class="w-[<?= $percent ?>%] h-[2px] md:hidden block bg-progress absolute top-4"></div>
         <div class="flex bg-white rounded-xl gap-3 z-10">
             <div
-                class="outline outline-white rounded-full <?= $step >= 1 ? 'bg-primaryGradient text-white' : 'border border-secondary text-secondary' ?> h-8 w-8 ps-[8px] pt-[5px] lg:text-sm text-sm my-auto">
-                <p>01</p>
+                class="rounded-full <?= $step >= 1 ? 'bg-primaryGradient text-white' : 'border border-secondary text-secondary' ?> h-8 w-8 <?= $step > 1 ? 'ps-[8px] pt-[5px]' : 'ps-[6px] pt-[5px]' ?> lg:text-sm text-sm my-auto">
+                <p><?= $step > 1 ? '<i class="fas fa-check"></i>' : '01' ?></p>
             </div>
             <?php if ($step == 1): ?>
                 <div class="md:block hidden text-start">
@@ -78,8 +78,8 @@ if ($step > 2) {
         </div>
         <div class="flex bg-white rounded-xl gap-3 z-10">
             <div
-                class="outline outline-white rounded-full <?= $step >= 2 ? 'bg-primaryGradient text-white' : 'border border-secondary text-secondary' ?> h-8 w-8 ps-[6px] pt-[5px] lg:text-sm text-sm my-auto">
-                <p>02</p>
+                class="rounded-full <?= $step >= 2 ? 'bg-primaryGradient text-white' : 'border border-secondary text-secondary' ?> h-8 w-8 <?= $step > 2 ? 'ps-[8px] pt-[5px]' : 'ps-[6px] pt-[5px]' ?> lg:text-sm text-sm my-auto">
+                <p><?= $step > 2 ? '<i class="fas fa-check"></i>' : '02' ?></p>
             </div>
             <?php if ($step == 2): ?>
                 <div class="md:block hidden text-start">
@@ -92,8 +92,8 @@ if ($step > 2) {
         </div>
         <div class="flex bg-white rounded-xl gap-3 z-10">
             <div
-                class="outline outline-white rounded-full <?= $step >= 3 ? 'bg-primaryGradient text-white' : 'border border-secondary text-secondary' ?> h-8 w-8 ps-[6px] pt-[5px] lg:text-sm text-sm my-auto">
-                <p>03</p>
+                class="rounded-full <?= $step >= 3 ? 'bg-primaryGradient text-white' : 'border border-secondary text-secondary' ?> h-8 w-8 <?= $step > 3 ? 'ps-[8px] pt-[5px]' : 'ps-[6px] pt-[5px]' ?> lg:text-sm text-sm my-auto">
+                <p><?= $step > 3 ? '<i class="fas fa-check"></i>' : '03' ?></p>
             </div>
             <?php if ($step == 3): ?>
                 <div class="md:block hidden text-start">
@@ -106,8 +106,8 @@ if ($step > 2) {
         </div>
         <div class="flex bg-white rounded-xl gap-3 z-10">
             <div
-                class="outline outline-white rounded-full <?= $step >= 4 ? 'bg-primaryGradient text-white' : 'border border-secondary text-secondary' ?> h-8 w-8 ps-[6px] pt-[5px] lg:text-sm text-sm my-auto">
-                <p>04</p>
+                class="rounded-full <?= $step >= 4 ? 'bg-primaryGradient text-white' : 'border border-secondary text-secondary' ?> h-8 w-8 <?= $step > 4 ? 'ps-[8px] pt-[5px]' : 'ps-[6px] pt-[5px]' ?> lg:text-sm text-sm my-auto">
+                <p><?= $step > 4 ? '<i class="fas fa-check"></i>' : '04' ?></p>
             </div>
             <?php if ($step == 4): ?>
                 <div class="md:block hidden text-start">
